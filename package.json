@@ -7,5 +7,6 @@
   "repository": {
   	"type":"git",
   	"url":"https://github.com/navneetsingh3112/Novopay_CMS.git"
-  }
+  },
+  "license": "MIT, GPL, COMMERCIAL"
 }
