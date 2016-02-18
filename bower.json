@@ -1,0 +1,19 @@
+{
+  "name": "Novopay_CMS",
+  "description": "CMS tools for Novopay partners",
+  "main": "server.js",
+  "authors": [
+    "Navaneet <navaneet@novopay.in>"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/libs",
+    "test",
+    "tests"
+  ]
+}
