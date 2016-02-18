@@ -1,0 +1,7 @@
+{
+  "name": "Novopay_CMS",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
