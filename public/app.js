@@ -1,6 +1,6 @@
-var npCmsApp = angular.module('npCmsApp', ['ngMaterial']);
+var npCmsLoginApp = angular.module('npCmsLoginApp', ['ngMaterial']);
 
-npCmsApp.config(function($mdThemingProvider) {
+npCmsLoginApp.config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('pink')
     .accentPalette('orange');
