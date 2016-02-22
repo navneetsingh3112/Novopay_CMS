@@ -1,3 +1,21 @@
-<div layout="row" layout-align="center center">
-  <div>one</div>
+<div layout="column" layout-align="center center" data-ng-controller="LoginController as login">
+    <div md-whiteframe="6" style="display: block; margin-left: auto; margin-right: auto; background-color: #00BCD4; padding: 55px; margin-top: 10vh">
+        <div>
+            <img src="../images/novopay_logo_web.png">
+        </div>
+        <form name="user_login_form" data-ng-submit="login.signIn()">
+            <div layout="column">
+                <md-input-container>
+                   <label> <i class="fa fa-user"></i>&nbsp; User Name</label>
+                    <input data-ng-model="login.user.userName">
+                </md-input-container>
+                <md-input-container>
+                    <label><i class="fa fa-unlock"></i>&nbsp; Password</label>
+                    <input data-ng-model="login.user.pwd" type="password">
+                </md-input-container>
+                <md-button type="submit" class="md-raised md-primary"><i class="fa fa-sign-in"></i>&nbsp;Log In</md-button>
+            </div>
+        </form>
+    </div>
+
 </div>
