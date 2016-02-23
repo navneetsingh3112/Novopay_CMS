@@ -34,7 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 
     
-// routes ==================================================
+// routes ======================================================
 app.use('/cms/auth', require('./app/routes/UserRouter.js'));
 
 
