@@ -5,6 +5,8 @@ npCmsLoginApp.controller('LoginController', ['LoginService', function(LoginServi
     	console.log(loginScope.user.userName );
     	LoginService.LoginManagement.Login.save(loginScope.user, function(data) {
 			console.log(data);
+            window.location = "./../../MainIndex.html#/partner";
+
 		}, function(error){
       		console.log('ooooppppss!!!');
       	});

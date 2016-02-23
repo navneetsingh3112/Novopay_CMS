@@ -1,7 +1,13 @@
-var npCmsLoginApp = angular.module('npCmsLoginApp', ['ngMaterial']);
+var npCmsApp = angular.module('npCmsApp', ['ngMaterial', 'ngRoute', 'ngResource']);
 
-npCmsLoginApp.config(function($mdThemingProvider) {
+npCmsApp.config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('pink')
-    .accentPalette('orange');
+      .primaryPalette('indigo')
+      .accentPalette('light-green')
+      .warnPalette('red');
 });
+
+npCmsApp.config(['$resourceProvider', function($resourceProvider) {
+  // Don't strip trailing slashes from calculated URLs
+  $resourceProvider.defaults.stripTrailingSlashes = false;
+}]);
