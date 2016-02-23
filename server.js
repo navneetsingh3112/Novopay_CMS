@@ -1,10 +1,12 @@
 
 // modules =================================================
 var express        = require('express');
+var router         = express.Router();
 var app            = express();
 var path           = require('path');
 var bodyParser     = require('body-parser');
 var mongoose       = require('mongoose');
+
 
 // index page loading ======================================
 app.use(express.static(__dirname + '/public'));
@@ -13,12 +15,17 @@ app.get('/',function(req,res){
 });
 
 
-// configuration ===========================================
+// db configuration ===========================================
 var db = require('./config/db');
 var port = 8080; 
 // connect to mongoDB database
 mongoose.connect(db.url);
+var connection = mongoose.connection;
+connection.once('open', function() {
 
+});
+
+// others configuration ========================================
 // get all data/stuff of the body (POST) parameters
 // parse application/json
 app.use(bodyParser.json());
@@ -28,24 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
     
 // routes ==================================================
-var Schema = mongoose.Schema;
-var db = mongoose.connection;
-
-var users = new Schema({
-  name:  String,
-  password: String
-});
-
-var Users = mongoose.model('users', users);
-
-
-app.post('/cms/auth/login', function(req,res){
-
-	Users.find({name: '1111' , password: '1111'}, function (err, docs) {
-        console.log("login -----"+JSON.stringify(docs));
-    });
-	
-});
+app.use('/cms/auth', require('./app/routes/UserRouter.js'));
 
 
 app.listen(port,function(){
