@@ -41,9 +41,7 @@
 </head>
 <body>
 <div id="page-content">
-    <header></header>
-    <nav></nav>
-
+    <div ng-controller="HeaderController as header" data-ng-include="'views/common/Header.html'"></div>
     <div data-ng-view>
 
     </div>
@@ -62,6 +60,8 @@
 <script type="text/javascript" src="./MainApp.js"></script>
 <script type="text/javascript" src="./js/config/RouteProvider.js"></script>
 <script type="text/javascript" src="./js/services/ResourceFactory.js"></script>
+<script type="text/javascript" src="./js/controllers/common/HeaderController.js"></script>
+<script type="text/javascript" src="./js/controllers/common/SideNavController.js"></script>
 <script type="text/javascript" src="./js/controllers/partners/PartnerViewController.js"></script>
 </body>
 </html>

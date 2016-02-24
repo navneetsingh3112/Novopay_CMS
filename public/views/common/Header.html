@@ -1,0 +1,34 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <md-button ng-click="toggleLeft()" ng-hide="isOpenLeft()" aria-label="Side Nav">
+            <i class="fa fa-bars"></i>
+        </md-button>
+
+        <h2>
+            <span>NOVOPAY CMS</span>
+        </h2>
+        <span flex=""></span>
+        <md-button class="md-icon-button" aria-label="More"><i class="fa fa-ellipsis-v"></i>
+        </md-button>
+    </div>
+</md-toolbar>
+
+<div>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="z-index: 9999">
+        <md-toolbar class="md-theme-light">
+            <div layout="row" layout-align="space-between center">
+                <div><h1 class="md-toolbar-tools">Sidenav Left</h1></div>
+                <div>
+                    <md-button ng-click="close()" class="md-icon-button md-accent" aria-label="Favorite">
+                        <md-icon class="fa fa-times"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+
+
+        </md-toolbar>
+        <md-content ng-controller="SideNavController as sideNav" layout-padding="">
+
+        </md-content>
+    </md-sidenav>
+</div>
