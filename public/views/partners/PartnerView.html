@@ -1,5 +1,57 @@
-<div ng-controller="PartnerViewController as PartnerView">
-    <form class="form-inline filterform" role="form" id="inquiriesform">
+
+
+<div ng-controller="PartnerViewController as partnerView">
+    <md-toolbar style="background-color: white;">
+        <div class="md-toolbar-tools" style="height: auto; max-height: inherit">
+            <form name="filter-form" style="color: black; width: 100vw">
+                <div layout-xs="column" layout-sm="column" layout-gt-sm="row"  layout-align="space-around center"
+                style="margin-top: 5px">
+                    <div>
+                        <label>From Date:</label>
+                        <input required type="date" name="formDate" ng-model="partnerView.fromDate" min="partnerView.dateToday">
+                        <input required type="time" name="fromTime" ng-model="partnerView.fromTime"
+                               placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" />
+                    </div>
+                    <div>
+                        <label>To Date:</label>
+                        <input required type="date" name="toDate" ng-model="partnerView.toDate" min="partnerView.dateToday">
+                        <input required type="time" name="toTime" ng-model="partnerView.toTime"
+                               placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" />
+                    </div>
+                    <div>
+                        <label> Partner: </label>
+                        <select name="selectedPartner"
+                                ng-options="partner.name for partner in partnerView.partnerList track by partner.code"
+                                ng-model="partnerView.selectedPartner"></select>
+                    </div>
+                    <div>
+                        <label> Outcome: </label>
+                        <select name="outcome" ng-model="partnerView.selectedOutcome">
+                            <option value="success">Successful Match</option>
+                            <option value="NO_AGENT_FOUND">No Agents Found</option>
+                            <option value="INSUFFICIENT_BALANCE">Agents had Insufficient Balance</option>
+                            <option value="all">All</option>
+                        </select>
+                    </div>
+                    <div>
+                        <md-button type="submit" class="md-raised md-primary">Apply</md-button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </md-toolbar>
+</div>
+
+
+
+
+<div id="map" style="position: absolute; border: solid; height: 85vh; width: 99vw;"></div>
+
+
+
+<!--    <form class="form-inline filterform" role="form" id="inquiriesform">
         <a class="navbar-brand" href="http://novopay.in/">
             <img src="img/novopay_logo.png" alt="" style="height:39px;margin-top:-22px"/>
         </a>
@@ -24,12 +76,12 @@
         </select>
         <input type="button" value="Submit" id="submitForm" class="btn btn-primary"/>
     </form>
-    <nav id='menu-ui' class='menu-ui'></nav>
-</div>
-<div class="col-md-12 mapDiv">
+    <nav id='menu-ui' class='menu-ui'></nav>-->
+
+<!--<div class="col-md-12 mapDiv">
     <div id="map-canvas"></div>
-</div>
-<script>
+</div>-->
+<!--<script>
 
     var map;
     var agentMarkersLayer;
@@ -326,4 +378,4 @@
 
         }
     }
-</script>
+</script>-->
