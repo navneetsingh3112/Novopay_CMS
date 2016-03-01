@@ -1,32 +1,32 @@
-
-
 <div ng-controller="PartnerViewController as partnerView">
     <md-toolbar style="background-color: white;">
         <div class="md-toolbar-tools" style="height: auto; max-height: inherit">
-            <form name="filter-form" style="color: black; width: 100vw">
-                <div layout-xs="column" layout-sm="column" layout-gt-sm="row"  layout-align="space-around center"
-                style="margin-top: 5px">
+            <form name="filter-form" style="color: black; width: 100vw" ng-submit="partnerView.applyFilter()">
+                <div layout-xs="column" layout-sm="column" layout-gt-sm="row" layout-align="space-around center"
+                     style="margin-top: 5px">
                     <div>
                         <label>From Date:</label>
-                        <input required type="date" name="formDate" ng-model="partnerView.fromDate" min="partnerView.dateToday">
-                        <input required type="time" name="fromTime" ng-model="partnerView.fromTime"
-                               placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" />
+                        <input required type="date" name="formDate" ng-model="partnerView.filterForm.fromDate"
+                               min="partnerView.dateToday">
+                        <input required type="time" name="fromTime" ng-model="partnerView.filterForm.fromTime"
+                               placeholder="HH:mm:ss" min="00:00:00" max="23:59:59"/>
                     </div>
                     <div>
                         <label>To Date:</label>
-                        <input required type="date" name="toDate" ng-model="partnerView.toDate" min="partnerView.dateToday">
-                        <input required type="time" name="toTime" ng-model="partnerView.toTime"
-                               placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" />
+                        <input required type="date" name="toDate" ng-model="partnerView.filterForm.toDate"
+                               min="partnerView.dateToday">
+                        <input required type="time" name="toTime" ng-model="partnerView.filterForm.toTime"
+                               placeholder="HH:mm:ss" min="00:00:00" max="23:59:59"/>
                     </div>
                     <div>
                         <label> Partner: </label>
                         <select name="selectedPartner"
                                 ng-options="partner.name for partner in partnerView.partnerList track by partner.code"
-                                ng-model="partnerView.selectedPartner"></select>
+                                ng-model="partnerView.filterForm.selectedPartner"></select>
                     </div>
                     <div>
                         <label> Outcome: </label>
-                        <select name="outcome" ng-model="partnerView.selectedOutcome">
+                        <select name="outcome" ng-model="partnerView.filterForm.selectedOutcome">
                             <option value="success">Successful Match</option>
                             <option value="NO_AGENT_FOUND">No Agents Found</option>
                             <option value="INSUFFICIENT_BALANCE">Agents had Insufficient Balance</option>
@@ -40,342 +40,18 @@
                 </div>
 
             </form>
+            <nav id="menu-ui" class="menu-ui">
+                <a href="" ng-click="partnerView.agentOnClick()"
+                   ng-class="{'agent_marker-cluster': partnerView.agentLayer}">Agents</a>
+                <a ng-if="partnerView.showInquiries" href="" ng-click="partnerView.inquiriesOnClick()"
+                   ng-class="{'inquiries_marker-cluster': partnerView.inquiriesLayer}">Inquiries</a>
+                <a ng-if="partnerView.showInquiries" href="" id="totalAmountInquiriesId">Total Amount:
+                    <b>{{partnerView.inquiries.totalAmount}}</b><br><br>
+                    Total Inquiries: <b>{{partnerView.inquiries.count}}</b></a>
+            </nav>
         </div>
     </md-toolbar>
 </div>
 
+<div id="map" style="position: absolute; border: solid 1px; height: 85vh; width: 99vw;"></div>
 
-
-
-<div id="map" style="position: absolute; border: solid; height: 85vh; width: 99vw;"></div>
-
-
-
-<!--    <form class="form-inline filterform" role="form" id="inquiriesform">
-        <a class="navbar-brand" href="http://novopay.in/">
-            <img src="img/novopay_logo.png" alt="" style="height:39px;margin-top:-22px"/>
-        </a>
-        <label for="fromdate" style="font-family:Roboto;font-size:100%;">From Date:
-            <input type="text" class="form-control datetimepicker" id="fromDateTimePicker" readonly>
-        </label>
-        <label for="todate" style="font-family:Roboto;font-size:100%;">To Date:
-            <input type="text" class="form-control datetimepicker" id="toDateTimePicker" readonly>
-        </label>
-        <label for="partnerCode" style="font-family:Roboto;font-size:100%;">Partner:</label>
-        <select id="partnerCode" class="form-control chosen-select">
-            <option value="ROADRUNNR" style="font-family:Roboto;font-size:100%;">Roadrunnr</option>
-        </select>
-        <label for="outcome" style="font-family:Roboto;font-size:100%;">Outcome:</label>
-        <select id="outcome" class="form-control chosen-select">
-            <option value="success" colorcode="#26D826" style="color:#26D826;">Successful Match</option>
-            <option value="NO_AGENT_FOUND" colorcode="#ff0000" style="color:#ff0000;">No Agents Found</option>
-            <option value="INSUFFICIENT_BALANCE" colorcode="#FFCC00" style="color:#FFCC00;">Agents had Insufficient
-                Balance
-            </option>
-            <option value="all" colorcode="#000000" style="color:#000000;">All</option>
-        </select>
-        <input type="button" value="Submit" id="submitForm" class="btn btn-primary"/>
-    </form>
-    <nav id='menu-ui' class='menu-ui'></nav>-->
-
-<!--<div class="col-md-12 mapDiv">
-    <div id="map-canvas"></div>
-</div>-->
-<!--<script>
-
-    var map;
-    var agentMarkersLayer;
-    var inquiriesMarkersLayer;
-    var circle;
-
-    $(document).ready(function () {
-
-        $('.datetimepicker').datetimepicker({
-            dayOfWeekStart : 1,
-            lang:'en',
-            startDate:  new Date()
-        });
-        var colorcode = $("#outcome").children(":selected").attr("colorcode");
-        $('#outcome').css('color', colorcode);
-
-        $("#outcome").change(function (e) {
-            var colorcode = $(this).children(":selected").attr("colorcode");
-            $('#outcome').css('color', colorcode);
-        });
-        var date = new Date();
-        var yyyyMMdd = date.getFullYear();
-        yyyyMMdd += "/"+(((1+date.getMonth()) < 10)? "0"+(1+date.getMonth()):(1+date.getMonth()));
-        yyyyMMdd += "/"+((date.getDate() < 10)? "0"+ date.getDate(): date.getDate());
-
-        var HHmm = ((date.getHours() < 10)? "0"+ date.getHours(): date.getHours());
-        HHmm += ":"+((date.getMinutes() < 10)? "0"+ date.getMinutes(): date.getMinutes());
-        $("#fromDateTimePicker").val(yyyyMMdd+" 00:00");
-        $("#toDateTimePicker").val(yyyyMMdd+" "+HHmm);
-
-        createMap();
-        getAgentsData();
-
-        $("#submitForm").click(function(e){
-            if(circle){
-                map.removeLayer(circle);
-                circle=null;
-            }
-            var fromDateStr = $("#fromDateTimePicker").val();
-            var fromDateEpoch =  new Date(fromDateStr).getTime();
-            var toDateStr = $("#toDateTimePicker").val();
-            var toDateEpoch =  new Date(toDateStr).getTime();
-            var partnerCode = $("#partnerCode option:selected").val();
-            var outcome = $("#outcome option:selected").val();
-
-
-            var query = "{\"query\":{\"filtered\":{\"query\": {\"match_all\": {}},\"filter\": {\"and\":[{\"range\":{\"timestamp\":{\"from\":"+fromDateEpoch+",\"to\":"+toDateEpoch+"}}},{\"term\":{\"partnerCode\":\"ROADRUNNR\"}}";
-            if(outcome == "success"){
-                query += ", {\"term\":{\"matchFound\":true}}, {\"missing\":{\"field\":\"reasonforfailure\"}}";
-            }else if(outcome == "NO_AGENT_FOUND"){
-                query += ", {\"term\":{\"matchFound\":false}}, {\"term\":{\"reasonforfailure\":\"NO_AGENT_FOUND\"}}";
-            }else if(outcome == "INSUFFICIENT_BALANCE"){
-                query += ", {\"term\":{\"matchFound\":true}}, {\"term\":{\"reasonforfailure\":\"INSUFFICIENT_BALANCE\"}}";
-            }
-            query += "]}}},\"size\":10000}";
-            $.ajax({
-                url: "https://es.novopay.in/cashmanagement/inquiriesdetails/_search",
-                type: "POST",
-                data: query,
-                beforeSend: function (xhr){
-                    xhr.setRequestHeader('Authorization', "Basic YXJ1bjphcnVucw==");
-                },
-                success: function(response)
-                {
-                    resetAgentMarkersColor();
-                    drawInquiriesMarker(response);
-                },
-                error:function(error)
-                {
-                    console.log("error :"+JSON.stringify(error));
-                },
-                timeout: 10000
-            });
-        });
-
-    });
-
-    function createMap()
-    {
-        L.mapbox.accessToken = 'pk.eyJ1IjoibmF2YW5lZXQiLCJhIjoiY2lqY3RrNm5wMDAybHR3a2tyZWlxNTk5ZCJ9.I0eajOrY9z5-plnBxMVnrw';
-        map = L.mapbox.map('map-canvas').setView([21.0000, 78.0000], 5).addLayer(L.mapbox.tileLayer('mapbox.streets'));
-        agentMarkersLayer = new L.MarkerClusterGroup({
-            maxClusterRadius: 120,
-            iconCreateFunction: function(cluster)
-            {
-                var childCount = cluster.getChildCount();
-                return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster agent_marker-cluster', iconSize: new L.Point(40, 40) });
-            }
-        });
-        inquiriesMarkersLayer = new L.MarkerClusterGroup({
-            iconCreateFunction: function(cluster)
-            {
-                var childCount = cluster.getChildCount();
-                return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster inquiries_marker-cluster', iconSize: new L.Point(40, 40) });
-            }
-        });
-    }
-
-    function getAgentsData()
-    {
-        var query = "{\"query\":{\"filtered\":{\"query\": {\"match_all\": {}},\"filter\": {\"and\":[{\"exists\":{\"field\":\"shopLocation\"}},{\"term\":{\"merchantStatus\":\"ACTIVE\"}},{\"term\":{\"userStatus\":\"ACTIVE\"}}]}}},\"size\": 10000}";
-
-        $.ajax({
-            url: "https://es.novopay.in/merchant/cashmanagementdetails/_search",
-            type: "POST",
-            data: query,
-            beforeSend: function (xhr){
-                xhr.setRequestHeader('Authorization', "Basic YXJ1bjphcnVucw==");
-            },
-            success: function(response)
-            {
-                drawAgentsMarker(response);
-            },
-            error:function(error)
-            {
-                console.log("error :"+JSON.stringify(error));
-            },
-            timeout: 10000
-        });
-
-    }
-
-    function drawAgentsMarker(response)
-    {
-        agentMarkersLayer.clearLayers();
-        var hitsArray = response.hits.hits;
-        for (var i = 0; i < hitsArray.length; i++)
-        {
-            var shopLocation = hitsArray[i]._source.shopLocation;
-            var myTitle = "Retailer Name: <b>"+hitsArray[i]._source.shopName+"</b><br>";
-            myTitle += "Mobile: <b>"+hitsArray[i]._source.mobileNo+"</b><br>";
-            myTitle += "Balance: <b>&#8377;"+hitsArray[i]._source.walletBalance+"</b><br>";
-            var xy = shopLocation.split(",");
-            var latlng = L.latLng(Number(xy[0]), Number(xy[1]));
-
-            var marker = L.marker((latlng), {
-                icon: L.mapbox.marker.icon({'marker-symbol': 'building','marker-size':'large', 'marker-color': '#0097c6'}),
-                source: hitsArray[i]._source
-            });
-            marker.bindPopup(myTitle);
-            agentMarkersLayer.addLayer(marker);
-        }
-        addLayer(agentMarkersLayer,'Agents','agent_marker-cluster');
-    }
-
-
-    function drawInquiriesMarker(response)
-    {
-        inquiriesMarkersLayer.clearLayers();
-        var hitsArray = response.hits.hits;
-        var totalAmount = 0;
-        var totalInquiries = 0;
-        for (var i = 0; i < hitsArray.length; i++)
-        {
-            var requestedLocation = hitsArray[i]._source.requestedLocation;
-
-            var myTitle = "Requested Amount: <b>&#8377;"+hitsArray[i]._source.requestedAmount+"</b><br>";
-            var requestedTimestamp = hitsArray[i]._source.timestamp;
-            var requestedDate = new Date(requestedTimestamp);
-            var formattedDate = requestedDate.getHours()+":"+requestedDate.getMinutes()+":"+requestedDate.getSeconds()+" "+requestedDate.getDate()+"-"+requestedDate.getMonth()+"-"+requestedDate.getFullYear();
-            myTitle += "Requested Time: <b>"+formattedDate+"</b><br>";
-            myTitle += "Requested Radius: <b>"+hitsArray[i]._source.requestedRadius+"m</b><br>";
-
-            var xy = requestedLocation.split(",");
-            var latlng = L.latLng(Number(xy[0]), Number(xy[1]));
-            var reasonforfailure = hitsArray[i]._source.reasonforfailure;
-            if(reasonforfailure == "NO_AGENT_FOUND"){
-                colorCode = '#ff0000';//red
-            }else if(reasonforfailure == "INSUFFICIENT_BALANCE"){
-                colorCode = '#FFCC00';//orange
-            }else{
-                colorCode = '#26D826';//green
-            }
-            var marker = L.marker((latlng), {
-                icon: L.mapbox.marker.icon({'marker-symbol': 'scooter','marker-size':'large', 'marker-color': colorCode}),
-                source: hitsArray[i]._source
-            });
-            marker.bindPopup(myTitle);
-            inquiriesMarkersLayer.addLayer(marker);
-            totalAmount = totalAmount + hitsArray[i]._source.requestedAmount;
-            totalInquiries++;
-        }
-
-
-        inquiriesMarkersLayer.on('click', function (e) {
-            highlightAgentMarkers(e.layer.options.source);
-            var latlng = e.latlng;
-            var radius = e.layer.options.source.requestedRadius;
-            if(!circle){
-                circle = L.circle(latlng, radius).addTo(map);
-            }else{
-                circle.setLatLng(latlng);
-                circle.setRadius(radius);
-            }
-        });
-        addLayer(inquiriesMarkersLayer,'Inquiries','inquiries_marker-cluster');
-        addAmountInquiriesLayer(totalAmount,totalInquiries,"totalAmountInquiriesId");
-    }
-
-    function highlightAgentMarkers(source)
-    {
-        var matchFound =  source.matchFound;
-        if(matchFound){
-            var reasonforfailure = source.reasonforfailure;
-            var matchedAgents = source.matchedAgents;
-
-            agentMarkersLayer.eachLayer(function(layer){
-                var agentShopLocation = layer.options.source.shopLocation;
-                var latLongFound = false;
-                for (var i = 0; i < matchedAgents.length; i++)
-                {
-                    var shopLocation = matchedAgents[i].shopLocation;
-                    if(agentShopLocation == shopLocation)
-                    {
-                        latLongFound = true;
-                        break;
-                    }
-                }
-                if(latLongFound){
-                    if(reasonforfailure == "INSUFFICIENT_BALANCE"){
-                        layer.setIcon(L.mapbox.marker.icon({'marker-symbol': 'building','marker-size':'large', 'marker-color': '#ff0000'}));//red
-                    }else{
-                        layer.setIcon(L.mapbox.marker.icon({'marker-symbol': 'building','marker-size':'large', 'marker-color': '#26D826'}));//green
-                    }
-                }else{
-                    layer.setIcon(L.mapbox.marker.icon({'marker-symbol': 'building','marker-size':'large', 'marker-color': '#0097c6'}));//blue
-                }
-            });
-        }else{
-            resetAgentMarkersColor();
-        }
-    }
-
-    function resetAgentMarkersColor()
-    {
-        if(agentMarkersLayer)
-        {
-            agentMarkersLayer.eachLayer(function(layer){
-                layer.setIcon(L.mapbox.marker.icon({'marker-symbol': 'building','marker-size':'large', 'marker-color': '#0097c6'}));//blue
-            });
-        }
-    }
-
-    function addLayer(layer,name,activeClass)
-    {
-        var nameFound = false;
-        $("#menu-ui").children().each(function(i, item) {
-            if(name == $(item).text()){
-                nameFound = true;
-            }
-        });
-        if(!nameFound){
-            map.addLayer(layer);
-            var link = document.createElement('a');
-            link.href = '#';
-            link.className = activeClass;
-            link.innerHTML = name;
-            link.onclick = function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                if (map.hasLayer(layer)) {
-                    map.removeLayer(layer);
-                    this.className = '';
-                } else {
-                    map.addLayer(layer);
-                    this.className = activeClass;
-                }
-            };
-            $("#menu-ui").append(link);
-        }
-    }
-
-    function addAmountInquiriesLayer(totalAmount,totalInquiries,id)
-    {
-        var idFound = false;
-        $("#menu-ui").children().each(function(i, item) {
-            if(id == $(item).attr('id')){
-                idFound = true;
-                var content = "Total Amount: <b>"+totalAmount+"</b><br><br>";
-                content += "Total Inquiries: <b>"+totalInquiries+"</b>";
-                $(item).html(content);
-            }
-        });
-        if(!idFound){
-            var link = document.createElement('a');
-            link.href = '#';
-            link.id = id;
-            var content = "Total Amount: <b>"+totalAmount+"</b><br><br>";
-            content += "Total Inquiries: <b>"+totalInquiries+"</b>";
-            link.innerHTML = content;
-            $("#menu-ui").append(link);
-        }else{
-
-        }
-    }
-</script>-->

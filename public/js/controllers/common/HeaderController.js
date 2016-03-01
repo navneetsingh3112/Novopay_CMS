@@ -10,10 +10,6 @@ npCmsApp.controller('HeaderController', ['$scope','$timeout', '$mdSidenav',
         return $mdSidenav('left').isOpen();
     };
 
-    /**
-     * Supplies a function that will continue to operate until the
-     * time is up.
-     */
     function debounce(func, wait, context) {
         var timer;
 

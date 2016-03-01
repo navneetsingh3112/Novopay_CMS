@@ -4,8 +4,9 @@
 npCmsApp.constant('RESOURCES', function(){
     var resource = 'cms/';
     return {
-        LOGIN_MANAGEMENT: {
-            LOGIN: resource + 'auth/login'
+        CMS: {
+            AGENTS: resource + 'partner/agents',
+            FILTER: resource + 'partner/pings'
         }
 
     }
@@ -13,8 +14,9 @@ npCmsApp.constant('RESOURCES', function(){
 
 npCmsApp.factory('ResourceFactory', ['$resource', 'RESOURCES', function ($resource, RESOURCES) {
     return {
-        LoginManagement: {
-            Login: $resource(RESOURCES.LOGIN_MANAGEMENT.LOGIN)
+        Agents: {
+            View: $resource(RESOURCES.CMS.AGENTS),
+            Filter: $resource(RESOURCES.CMS.FILTER)
         }
     }
 }]);

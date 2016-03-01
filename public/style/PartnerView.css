@@ -1,26 +1,3 @@
-.mapDiv {
-    height: 92vh;
-    padding: 0;
-}
-
-.filterform {
-    padding-top: 10px;
-}
-
-#map-canvas {
-    border: 1px solid black;
-    width: 100%;
-    height: 100%;
-}
-
-.form-inline {
-    text-align: center;
-}
-
-.radiusSel {
-    margin-left: 50px;
-}
-
 .agent_marker-cluster {
     background-color: rgba(0, 151, 198, 0.6);
 }

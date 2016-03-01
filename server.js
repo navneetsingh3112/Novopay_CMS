@@ -36,6 +36,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
     
 // routes ======================================================
 app.use('/cms/auth', require('./app/routes/UserRouter.js'));
+app.use('/cms/partner', require('./app/routes/PartnerViewRouter.js'));
 
 
 app.listen(port,function(){
