@@ -1,6 +1,7 @@
 npCmsApp.controller('PartnerViewController', ['$scope', 'ResourceFactory', function ($scope, ResourceFactory) {
     var partnerViewScope = this;
 
+    var circle;
     partnerViewScope.filterForm = {};
     partnerViewScope.dateToday = new Date();
     partnerViewScope.filterForm.fromDate = new Date();
@@ -156,6 +157,49 @@ npCmsApp.controller('PartnerViewController', ['$scope', 'ResourceFactory', funct
             totalAmount = totalAmount + hitsArray[i]._source.requestedAmount;
         }
 
+        function highlightAgentMarkers(source)
+        {
+            var matchFound =  source.matchFound;
+            if(matchFound){
+                var reasonforfailure = source.reasonforfailure;
+                var matchedAgents = source.matchedAgents;
+
+                agentMarkersLayer.eachLayer(function(layer){
+                    var agentShopLocation = layer.options.source.shopLocation;
+                    var latLongFound = false;
+                    for (var i = 0; i < matchedAgents.length; i++)
+                    {
+                        var shopLocation = matchedAgents[i].shopLocation;
+                        if(agentShopLocation == shopLocation)
+                        {
+                            latLongFound = true;
+                            break;
+                        }
+                    }
+                    if(latLongFound){
+                        if(reasonforfailure == "INSUFFICIENT_BALANCE"){
+                            layer.setIcon(L.mapbox.marker.icon({'marker-symbol': 'building','marker-size':'large', 'marker-color': '#ff0000'}));//red
+                        }else{
+                            layer.setIcon(L.mapbox.marker.icon({'marker-symbol': 'building','marker-size':'large', 'marker-color': '#26D826'}));//green
+                        }
+                    }else{
+                        layer.setIcon(L.mapbox.marker.icon({'marker-symbol': 'building','marker-size':'large', 'marker-color': '#0097c6'}));//blue
+                    }
+                });
+            }else{
+                resetAgentMarkersColor();
+            }
+        }
+
+        function resetAgentMarkersColor()
+        {
+            if(agentMarkersLayer)
+            {
+                agentMarkersLayer.eachLayer(function(layer){
+                    layer.setIcon(L.mapbox.marker.icon({'marker-symbol': 'building','marker-size':'large', 'marker-color': '#0097c6'}));//blue
+                });
+            }
+        }
 
         inquiriesMarkersLayer.on('click', function (e) {
             highlightAgentMarkers(e.layer.options.source);
@@ -174,6 +218,10 @@ npCmsApp.controller('PartnerViewController', ['$scope', 'ResourceFactory', funct
     }
 
     partnerViewScope.applyFilter = function () {
+        if(circle){
+            map.removeLayer(circle);
+            circle=null;
+        }
         partnerViewScope.filterForm.fromDateStr = (partnerViewScope.filterForm.fromDate).getFullYear() + '/' +
             (((partnerViewScope.filterForm.fromDate).getMonth()) + 1) + '/' +
             (partnerViewScope.filterForm.fromDate).getDate() + ' ' +
