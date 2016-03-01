@@ -1,16 +1,35 @@
-var mongoose       = require('mongoose');
-
-var usersSchema = mongoose.Schema({
-  name:String,
-  password:String
-});
+'use strict';
 
 
-usersSchema.methods.validateUser = function(callBack){
-	return this.model('users').findOne({name: this.name , password: this.password}, callBack);
-}
+module.exports = function(sequelize, DataTypes) {
+	var User = sequelize.define('users',
+		{
+			name: {
+				field: 'username',
+				type : DataTypes.STRING,
+				allowNull: false
+			},
+			password:{
+				field: 'password',
+				type : DataTypes.STRING,
+				allowNull: false
+			}
+		},
+		{
+			instanceMethods: {
+				toJSON: function () {
+					var values = this.get();
+					delete values.password;
+					return values;
+				},
+			},
+			associate: function(models) {
+				//User.hasMany(models.Article);
+			}
+		}
+	);
 
-var Users = mongoose.model('users', usersSchema);
+	return User;
+};
 
 
-module.exports = Users;

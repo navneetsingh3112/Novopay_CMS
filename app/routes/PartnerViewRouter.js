@@ -41,7 +41,6 @@ router.get('/agents', function(req,res){
 
 
 router.post('/pings', function(req,res){
-    //2016/02/29 00:00
     var fromDateStr = req.body.fromDateStr;
     console.log('fromDateStr--'+fromDateStr);
     var fromDateEpoch =  new Date(fromDateStr).getTime();
@@ -92,4 +91,4 @@ console.log(query);
 });
 
 
- module.exports = router;
+module.exports = router;
