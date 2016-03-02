@@ -19,6 +19,9 @@ npCmsApp.controller('PartnerViewController', ['$scope', 'ResourceFactory', funct
         name: 'Roadrunnr',
         code: 'ROADRUNNR'
     }];
+    partnerViewScope.radiusChange = false;
+    partnerViewScope.changedRadius = 200;
+
     partnerViewScope.filterForm.selectedPartner = {name: 'Roadrunnr', code: 'ROADRUNNR'};
     partnerViewScope.filterForm.selectedOutcome = {};
     partnerViewScope.filterForm.selectedOutcome = 'success';
@@ -133,6 +136,9 @@ npCmsApp.controller('PartnerViewController', ['$scope', 'ResourceFactory', funct
                 "-" + requestedDate.getFullYear();
             myTitle += "Requested Time: <b>" + formattedDate + "</b><br>";
             myTitle += "Requested Radius: <b>" + hitsArray[i]._source.requestedRadius + "m</b><br>";
+            if(partnerViewScope.radiusChange){
+                myTitle += "<span>Changed Radius: <b>" + partnerViewScope.changedRadius + "m</b></span><br>";
+            }
 
             var xy = requestedLocation.split(",");
             var latlng = L.latLng(Number(xy[0]), Number(xy[1]));
@@ -204,7 +210,7 @@ npCmsApp.controller('PartnerViewController', ['$scope', 'ResourceFactory', funct
         inquiriesMarkersLayer.on('click', function (e) {
             highlightAgentMarkers(e.layer.options.source);
             var latlng = e.latlng;
-            var radius = e.layer.options.source.requestedRadius;
+            var radius = partnerViewScope.radiusChange ? partnerViewScope.changedRadius : e.layer.options.source.requestedRadius;
             if (!circle) {
                 circle = L.circle(latlng, radius).addTo(map);
             } else {

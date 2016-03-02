@@ -34,6 +34,18 @@
                         </select>
                     </div>
                     <div>
+                        <label>Change Radius
+                            <input type="checkbox" name="radiusChange" ng-model="partnerView.radiusChange">
+                        </label>
+                            <div layout ng-if="partnerView.radiusChange">
+                                <md-slider flex ng-model="partnerView.changedRadius" min="100" max="10000" aria-label="blue" id="blue-slider" class="md-primary">
+                                </md-slider>
+                                <div flex="30" layout layout-align="center center">
+                                    <input flex type="number" ng-model="partnerView.changedRadius" aria-label="blue" aria-controls="blue-slider">
+                                </div>
+                            </div>
+                    </div>
+                    <div>
                         <md-button type="submit" class="md-raised md-primary">Apply</md-button>
                     </div>
 

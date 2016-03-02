@@ -58,3 +58,15 @@
 {"level":"info","message":"Loading model file UserModel.js","timestamp":"2016-03-01T10:45:00.484Z"}
 {"level":"info","message":"Loaded db configuration...","timestamp":"2016-03-01T10:45:00.500Z"}
 {"level":"info","message":"Database synchronized","timestamp":"2016-03-01T10:45:00.652Z"}
+{"level":"info","message":"Starting Novopay CMS...","timestamp":"2016-03-01T11:19:19.304Z"}
+{"level":"info","message":"Config loaded: development","timestamp":"2016-03-01T11:19:19.308Z"}
+{"root":"c:\\Users\\Novopay\\repo\\Novopay_CMS","modelsDir":"c:\\Users\\Novopay\\repo\\Novopay_CMS/app/models","PORT":8080,"FORCE_DB_SYNC":"false","db":{"name":"cms","password":"Villa#25","username":"root","host":"localhost","port":3306},"app":{"name":"Novopay CMS"},"NODE_ENV":"development","_":[],"$0":"C:\\Program Files\\nodejs\\node.exe c:\\Users\\Novopay\\repo\\Novopay_CMS\\server.js","level":"info","message":"Accepted Config:","timestamp":"2016-03-01T11:19:19.317Z"}
+{"level":"info","message":"Loading model file UserModel.js","timestamp":"2016-03-01T11:19:32.747Z"}
+{"level":"info","message":"Loaded db configuration...","timestamp":"2016-03-01T11:19:32.858Z"}
+{"level":"info","message":"Database synchronized","timestamp":"2016-03-01T11:19:42.167Z"}
+{"level":"info","message":"Starting Novopay CMS...","timestamp":"2016-03-02T06:33:03.681Z"}
+{"level":"info","message":"Config loaded: development","timestamp":"2016-03-02T06:33:03.687Z"}
+{"root":"c:\\Users\\Novopay\\repo\\Novopay_CMS","modelsDir":"c:\\Users\\Novopay\\repo\\Novopay_CMS/app/models","PORT":8080,"FORCE_DB_SYNC":"false","db":{"name":"cms","password":"Villa#25","username":"root","host":"localhost","port":3306},"app":{"name":"Novopay CMS"},"NODE_ENV":"development","_":[],"$0":"C:\\Program Files\\nodejs\\node.exe c:\\Users\\Novopay\\repo\\Novopay_CMS\\server.js","level":"info","message":"Accepted Config:","timestamp":"2016-03-02T06:33:03.696Z"}
+{"level":"info","message":"Loading model file UserModel.js","timestamp":"2016-03-02T06:33:33.191Z"}
+{"level":"info","message":"Loaded db configuration...","timestamp":"2016-03-02T06:33:33.353Z"}
+{"level":"info","message":"Database synchronized","timestamp":"2016-03-02T06:33:48.372Z"}
